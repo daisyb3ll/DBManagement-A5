@@ -1,5 +1,6 @@
 # DBManagement-A6
-CSPC-408-03 Final Project; Pokédex 
+CSPC-408-03 Final Project; Board Game Cafe Inventory!
+
 
 ## 1. contributors; 
 
