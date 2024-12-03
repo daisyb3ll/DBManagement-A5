@@ -22,6 +22,9 @@ CSPC-408-03 Final Project; Board Game Cafe Inventory!
         git; 2397470
 
 ## 2. source files; 
+diagrams:
+        https://lucid.app/lucidchart/1a101883-cd50-4307-acee-17b6f61ae23e/edit?invitationId=inv_fc7e53ce-ac2f-4703-aed8-06a196dfa75a
+        
 
 functionality;
 
