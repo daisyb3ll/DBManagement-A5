@@ -1,0 +1,10 @@
+from helper import helper
+from database import database
+
+#main method
+database.create_Customers_table
+database.create_BoardGames_table
+database.create_MenuItems_table
+database.create_Reservations_table
+database.create_BoardGameOrders_table
+database.create_MenuOrders_table
