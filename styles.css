@@ -27,14 +27,7 @@ a:hover {
     background-color: hsl(0, 0%, 100%);
     color: #643b22;
     padding: 2rem;
-    text-align: left;
-}
-
-.header-content {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    /* Corrected gap */
+    text-align: center;
 }
 
 .profile-picture {
@@ -47,13 +40,13 @@ a:hover {
 
 
 .header h1 {
-    font-size: 1.5rem;
+    font-size: 6rem;
     margin-bottom: 0.5rem;
     font-family: 'Dongle',static;
 }
 
 .minibody {
-    font-size: 0.8rem;
+    font-size: 1.5rem;
     color: #643b22;
 }
 
