@@ -46,7 +46,7 @@ a:hover {
 }
 
 .minibody {
-    font-size: 1.5rem;
+    font-size: 3rem;
     color: #643b22;
 }
 
@@ -112,11 +112,13 @@ section {
 h2,
 h3 {
     font-family: "Dongle", static;
-    font-size: 1.8rem;
+    font-size: 4rem;
     color: #61422f;
     margin-bottom: 1rem;
 }
-
+ p {
+    font-size: 2rem;
+ }
 
 #about-me {
 
