@@ -15,6 +15,14 @@ class database():
     def single_record(self, query):
         self.cursor.execute(query)
         return self.cursor.fetchone()[0]
+    
+    # function to return the value of the first row's 
+    # first attribute of some select query.
+    # best used for querying a single aggregate select 
+    # query with named placeholders
+    def single_record_params(self, query, dictionary):
+        self.cursor.execute(query, dictionary)
+        return self.cursor.fetchone()[0]
 
     # function that creates BoardGames table in our database
     def create_BoardGames_table(self):
@@ -39,7 +47,7 @@ class database():
             MenuItemName VARCHAR(20),
             MenuItemPrice DOUBLE,
             isVegan BOOL,
-            isGlutenFree BOOL,
+            isGlutenFree BOOL
         );
         '''
         self.cursor.execute(query)
@@ -51,7 +59,7 @@ class database():
         CREATE TABLE Customers(
             customerID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             customerName VARCHAR(20),
-            customerEmail VARCHAR(20),
+            customerEmail VARCHAR(20)
         );
         '''
         self.cursor.execute(query)
@@ -119,3 +127,28 @@ class database():
         '''
         result = self.single_record(query)
         return result == 0
+    
+    #Function to create a new customer given the name and email
+    def create_new_customer(self, name, email):
+        query = f"INSERT INTO Customers (customerName, customerEmail) Values(?, ?)"
+        self.cursor.execute(query, (name, email))
+
+    #Function to return a customerID based on name and email
+    def get_customer_id(self, name, email):
+        query = '''
+        SELECT customerID
+        FROM customers
+        WHERE customerName LIKE ? AND customerEmail LIKE ?;
+        '''
+        return self.single_record_params(query, (name, email))
+    
+    #Function to check if an ID exists in the customers table
+    def check_customer_id(self, id):
+         query = f'''
+            SELECT COUNT(*)
+            FROM customers
+            WHERE customerID = ?
+            '''
+         result = self.single_record_params(query, (id))
+         return result != 0
+
