@@ -19,43 +19,107 @@
 
     <!-- Header -->
     <div class="header">
+
         <h1>Drink and Dice</h1>
         <p class="minibody">Where fun meets flavor!</p>
+
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="headerbar">
+    <!-- <nav class="headerbar">
         <a href="#menu">Menu</a>
         <a href="#board-game">Board Games</a>
         <a href="#reserve">Reserve</a>
         <a href="#sign-in">Reservations</a>
-    </nav>
+    </nav> -->
 
-    <!-- Main Section -->
-    <main>
-        <section id="search">
-            <h2>Inventory Search</h2>
-            <form>
-                <label for="search-input">Find your item:</label>
-                <input type="text" id="search-input" placeholder="Search inventory">
-                <button type="submit" class="icon-button">Search</button>
-            </form>
-        </section>
 
-        <section id="about">
-            <h2>About Us</h2>
-            <p>
-                Drinks & Dice is your go-to spot for refreshing drinks and exciting games. 
-                Join us to explore the world of fun and flavor!
-            </p>
-        </section>
-    </main>
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<link rel="stylesheet" href="styles.css">
+
+<body>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+            <li><a data-toggle="tab" href="#menu1">games</a></li>
+            <li><a data-toggle="tab" href="#menu2">reserve</a></li>
+            <li><a data-toggle="tab" href="#menu3">past reservations </a></li>
+            <li><a data-toggle="tab" href="#menu4">developer credits</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h3>menu</h3>
+                <p>[cafe menu goes here].</p>
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h3>games inventory</h3>
+                <p>[list of games goes here] .</p>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h3>reservations</h3>
+                <p>[make reservations]</p>
+            </div>
+            <div id="menu3" class="tab-pane fade">
+                <h3>past reservations</h3>
+                <p>[list of all past user reservations goes here]
+                </p>
+            </div>
+
+            <div id="menu4" class="tab-pane fade">
+                    <h2>Credits/Creators</h2>
+
+                    <div class="info-card">
+                        Annika Brown
+                        <p style="text-indent: 2em" ;> Chapman University'26</p>
+                        <p style="text-indent: 2em" ;> B.S. Computer Science & Minor in Theatre</p>
+                        <!-- Social Media Icon Buttons -->
+                        <div class="social-media-buttons">
+                            <a href="https://www.linkedin.com/in/annika-brown-5535952a9/" class="button-icon">
+                                Linkedin
+                            </a>
+                        </div>
+                        </div>
+
+
+                    <div class="info-card">
+                        Savana Chou
+                        <p style="text-indent: 2em" ;> Chapman University'26</p>
+                        <p style="text-indent: 2em" ;> B.S. Computer Science & Game Development Minor</p>
+                    </div>
+
+                    <div class="info-card">
+                        Daisy Fernandez-Reyes
+                        <p style="text-indent: 1em" ;> Chapman University'25</p>
+                        <p style="text-indent: 2em" ;> B.S. Software Engineering & Peace & Justice Studies Minor</p>
+                    </div>
+
+                    <div class="info-card">
+                        Alex Lark
+                        <p style="text-indent: 1em" ;> Chapman University'26</p>
+                        <p style="text-indent: 2em" ;> B.S. Computer Science & Game Development Minor</p>
+
+                    </div>
+                    
+            </div>
+
+        </div>
+    </div>
+
+</body>
 
     <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2024 Drinks & Dice. All rights reserved.</p>
     </footer>
-
-</body>
 
 </html>
