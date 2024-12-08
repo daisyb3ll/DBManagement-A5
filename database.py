@@ -47,7 +47,6 @@ class database():
             MenuItemName VARCHAR(20),
             MenuItemPrice DOUBLE,
             isVegan BOOL,
-            isGlutenFree BOOL
         );
         '''
         self.cursor.execute(query)
