@@ -150,4 +150,7 @@ class database():
             '''
          result = self.single_record_params(query, (id))
          return result != 0
-
+    
+    def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
+        query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
+        self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
