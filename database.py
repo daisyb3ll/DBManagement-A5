@@ -46,7 +46,7 @@ class database():
             MenuItemsID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             MenuItemName VARCHAR(20),
             MenuItemPrice DOUBLE,
-            isVegan BOOL,
+            isVegan BOOL
         );
         '''
         self.cursor.execute(query)
@@ -118,6 +118,12 @@ class database():
             query = f"INSERT INTO {table} VALUES("+placeholders+")"
             self.bulk_insert(query, data)
 
+    # function for bulk inserting records
+    # best used for inserting many records with parameters
+    def bulk_insert(self, query, data):
+        self.cursor.executemany(query, data)
+        self.connection.commit()
+
     # function that returns if given table has records
     def is_table_empty(self, table):
         query = f'''
@@ -150,6 +156,10 @@ class database():
             '''
          result = self.single_record_params(query, (id))
          return result != 0
+    
+    def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
+        query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
+        self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
     
     def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
         query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
