@@ -102,6 +102,14 @@ h2, h3 {
     word-spacing: normal;
 }
 
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Adjusts based on space */
+    gap: 0px; /* Space between the cards */
+    margin: 16px auto;
+    max-width: 2000px; /* Adjust as needed for your layout */
+}
+
 /* cards for holding info style; non responsive @daisy */
 .info-card {
     border: 2px solid hsl(33, 100%, 88%);
