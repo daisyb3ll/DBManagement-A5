@@ -37,6 +37,7 @@ a:hover {
     font-size: 6rem;
     margin-bottom: 0.5rem;
     font-family: 'Dongle',static;
+    font-weight: bold;
     margin-bottom: 0px; /* Reduced margin */
 }
 
@@ -157,7 +158,7 @@ h2, h3 {
 }
 
 /* Sign In Page Styles */
-.sign-in-section {
+.box-section {
     display: flex;
     justify-content: center;
     align-items: center;
