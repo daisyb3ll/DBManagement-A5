@@ -26,14 +26,17 @@
     </div>
 
     <!-- Create Account Form -->
-    <div class="sign-in-section">
+    <div class="box-section">
         <div class="form-container">
             <h2>Create Account</h2>
-            <div class="input-group">
-                <label for="userID">Enter Your ID</label>
-                <input type="text" id="userID" placeholder="Your ID" required>
-            </div>
-            <button class="sign-in-btn">Create Account</button>
+            <form action="menu.html" method="GET">
+                <div class="input-group">
+                    <label for="userID">Enter Your ID</label>
+                    <input type="text" id="userID" name="userID" placeholder="Your ID" required>
+                </div>
+                <button type="submit" class="sign-in-btn">Create Account</button>
+            </form>
+
             <p class="no-account-text">Already have an account?</p>
             <a href="sign-in.html" class="create-account-btn">Login</a>
         </div>

@@ -11,8 +11,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -27,52 +34,39 @@
         <p class="minibody">Where fun meets flavor!</p>
     </div>
 
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+    <!-- Navigation Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+        <li><a data-toggle="tab" href="#menu1">Games</a></li>
+        <li><a data-toggle="tab" href="#menu2">Reserve</a></li>
+        <li><a data-toggle="tab" href="#menu3">Past Reservations</a></li>
+    </ul>
 
-<link rel="stylesheet" href="styles.css">
-
-<body>
-
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-            <li><a data-toggle="tab" href="#menu1">games</a></li>
-            <li><a data-toggle="tab" href="#menu2">reserve</a></li>
-            <li><a data-toggle="tab" href="#menu3">past reservations </a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h3>menu</h3>
-                <p>[cafe menu goes here].</p>
-            </div>
-            <div id="menu1" class="tab-pane fade">
-                <h3>games inventory</h3>
-                <p>[list of games goes here] .</p>
-            </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3>reservations</h3>
-                <p>[make reservations]</p>
-            </div>
-            <div id="menu3" class="tab-pane fade">
-                <h3>past reservations</h3>
-                <p>[list of all past user reservations goes here]
-                </p>
-            </div>
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>Menu</h3>
+            <p>[Cafe menu goes here].</p>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Games Inventory</h3>
+            <p>[List of games goes here].</p>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Reservations</h3>
+            <p>[Make reservations].</p>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Past Reservations</h3>
+            <p>[List of all past user reservations goes here].</p>
         </div>
     </div>
-
-</body>
 
     <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2024 Drinks & Dice. All rights reserved.</p>
     </footer>
+
+</body>
 
 </html>
