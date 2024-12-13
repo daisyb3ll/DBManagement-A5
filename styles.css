@@ -195,7 +195,7 @@ h2, h3 {
     margin-bottom: 1.5rem;
 }
 
-.sign-in-btn {
+.btn {
     width: 100%;
     background-color: #643b22;
     color: #fff;
@@ -208,12 +208,12 @@ h2, h3 {
     box-shadow: 5px 5px .5px rgba(192, 143, 115, 0.5);
 }
 
-.sign-in-btn:hover {
+.btn:hover {
     background-color: #ff6f14;
     transform: scale(1.10);
 }
 
-.sign-in-btn:active {
+.btn:active {
     background-color: #ff6f14;
     transform: scale(0.95);
 }

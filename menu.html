@@ -96,11 +96,49 @@
         </div>
         <div class="tab-content" id="reserve">
             <h2>Reserve A Time</h2>
-            <p>This is the content for Tab 3.</p>
+            <p>Fill out the information below to make a reservation!</p>
+            <form class="reservation-form">
+                <!-- Date -->
+                <label for="reservation-date">Select a Date:</label>
+                <input type="date" id="reservation-date" name="date" required>
+        
+                <!-- Time -->
+                <label for="reservation-time">Select a Time:</label>
+                <input type="time" id="reservation-time" name="time" required>
+        
+                <!-- Guest Count -->
+                <label for="guest-count">Number of Guests:</label>
+                <input type="number" id="guest-count" name="guestCount" min="1" required>
+        
+                <!-- Board Game -->
+                <label for="board-game">Pick a Board Game:</label>
+                <select id="board-game" name="boardGame" required>
+                    <option value="" disabled selected>Select a game</option>
+                    <option value="catan">Catan</option>
+                    <option value="ticket-to-ride">Ticket to Ride</option>
+                    <option value="pandemic">Pandemic</option>
+                    <option value="carcassonne">Carcassonne</option>
+                    <option value="exploding-kittens">Exploding Kittens</option>
+                </select>
+        
+                <!-- Drink (Optional) -->
+                <label for="drink">Pick a Drink (Optional):</label>
+                <select id="drink" name="drink">
+                    <option value="" disabled selected>Select a drink</option>
+                    <option value="none">None</option>
+                    <option value="classic-boba">Classic Boba</option>
+                    <option value="strawberry-matcha">Strawberry Matcha</option>
+                    <option value="thai-tea">Thai Tea</option>
+                    <option value="taro-milk-tea">Taro Milk Tea</option>
+                </select>
+        
+                <!-- Submit Button -->
+                <button type="submit" class="btn">Make Reservation</button>
+            </form>
         </div>
         <div class="tab-content" id="past-reservation">
             <h2>Past Reservations</h2>
-            <p>This is the content for Tab 4.</p>
+            <p>Here are your past reservations:</p>
         </div>
     </div>
 

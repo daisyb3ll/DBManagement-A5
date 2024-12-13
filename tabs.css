@@ -132,3 +132,31 @@
 .game-details:contains("Available: No") {
     color: red;
 }
+
+
+/* Reservation Form Styling */
+.reservation-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.reservation-form label {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.reservation-form input,
+.reservation-form select {
+    padding: 10px;
+    font-size: 25px;
+    font-family: 'Dongle', static;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
