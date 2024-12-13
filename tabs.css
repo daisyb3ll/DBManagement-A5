@@ -1,0 +1,68 @@
+/* Tab Container */
+.tab-container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* Tab Links (Navigation) */
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: flex-start; /* Align tabs to the left */
+    gap: 10px; /* Add space between tabs */
+}
+
+.tabs a {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #ddd;
+    color: black;
+    border-radius: 5px;
+    font-size: 25px;
+    transition: background-color 0.3s;
+}
+
+.tabs a:hover {
+    background-color: #ccc;
+}
+
+.tabs a.active {
+    background-color: #643b22;
+    color: white;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-top: 2px solid #ddd;
+}
+
+/* Show active tab content */
+.tab-content.active {
+    display: block;
+}
+
+/* Box Section */
+.box-section {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    width: 80%; /* Adjust this percentage to make the box wider */
+    max-width: 1200px; /* Set a max width for larger screens */
+}
+
+/* Form Container */
+.form-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%; /* Ensures it takes up the full width of the parent box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

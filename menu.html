@@ -10,16 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="tabs.css">
 
-    <!-- Scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -34,39 +30,59 @@
         <p class="minibody">Where fun meets flavor!</p>
     </div>
 
-    <!-- Navigation Tabs -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-        <li><a data-toggle="tab" href="#menu1">Games</a></li>
-        <li><a data-toggle="tab" href="#menu2">Reserve</a></li>
-        <li><a data-toggle="tab" href="#menu3">Past Reservations</a></li>
-    </ul>
+    <div class="tab-container">
+        <!-- Tab Links (Navigation) -->
+        <div class="tabs">
+            <a href="#" class="tab-link active" data-target="menu">Menu</a>
+            <a href="#" class="tab-link" data-target="games">Games</a>
+            <a href="#" class="tab-link" data-target="reserve">Reserve</a>
+            <a href="#" class="tab-link" data-target="past-reservation">Reservations</a>
 
-    <!-- Tab Content -->
-    <div class="tab-content">
-        <div id="home" class="tab-pane fade in active">
-            <h3>Menu</h3>
-            <p>[Cafe menu goes here].</p>
         </div>
-        <div id="menu1" class="tab-pane fade">
-            <h3>Games Inventory</h3>
-            <p>[List of games goes here].</p>
+
+        <!-- Tab Content -->
+        <div class="tab-content active" id="menu">
+            <h2>Drink Menu</h2>
+            <p>This is the content for Tab 1.</p>
         </div>
-        <div id="menu2" class="tab-pane fade">
-            <h3>Reservations</h3>
-            <p>[Make reservations].</p>
+        <div class="tab-content" id="games">
+            <h2>Board Games</h2>
+            <p>This is the content for Tab 2.</p>
         </div>
-        <div id="menu3" class="tab-pane fade">
-            <h3>Past Reservations</h3>
-            <p>[List of all past user reservations goes here].</p>
+        <div class="tab-content" id="reserve">
+            <h2>Reserve A Time</h2>
+            <p>This is the content for Tab 3.</p>
+        </div>
+        <div class="tab-content" id="past-reservation">
+            <h2>Past Reservations</h2>
+            <p>This is the content for Tab 4.</p>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2024 Drinks & Dice. All rights reserved.</p>
-    </footer>
+    <script>
+        // JavaScript to handle tab switching
+        const tabs = document.querySelectorAll('.tab-link');
+        const contents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active class from all tabs
+                tabs.forEach(link => link.classList.remove('active'));
+
+                // Add active class to the clicked tab
+                tab.classList.add('active');
+
+                // Hide all content sections
+                contents.forEach(content => content.classList.remove('active'));
+
+                // Show the clicked tab's content
+                const target = document.getElementById(tab.getAttribute('data-target'));
+                target.classList.add('active');
+            });
+        });
+    </script>
 
 </body>
-
 </html>
