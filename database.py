@@ -67,7 +67,7 @@ class database():
     # function that creates reservations table in our database
     def create_Reservations_table(self):
         query = '''
-        CREATE TABLE Reservation(
+        CREATE TABLE Reservations(
             resevationID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             customerID INTEGER,
             reservationDate VARCHAR(20),
@@ -112,10 +112,14 @@ class database():
     #function to populate a given table with a given filepath
     def populate_table(self, table, filepath):
         if self.is_table_empty(table):
+            self.cursor.execute(f"PRAGMA table_info({table})")
+            columns_info = self.cursor.fetchall()
+            columns = [col[1] for col in columns_info if col[5] != 1]  # col[5] is 'pk' (primary key flag)
             data = helper.data_cleaner(filepath)
-            attribute_count = len(data[0])
-            placeholders = ("?,"*attribute_count)[:-1]
-            query = f"INSERT INTO {table} VALUES("+placeholders+")"
+            attribute_count = len(columns)
+            placeholders = ("?," * attribute_count)[:-1]
+            column_names = ",".join(columns)
+            query = f"INSERT INTO {table} ({column_names}) VALUES({placeholders})"
             self.bulk_insert(query, data)
 
     # function for bulk inserting records
