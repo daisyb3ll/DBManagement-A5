@@ -13,8 +13,8 @@
     
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="tabs.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tabs.css') }}">
 
 </head>
 
@@ -23,6 +23,7 @@
     <!-- Header -->
     <div class="header">
         <div class="nav-buttons">
+            
             <a href="home.html" class="nav-button">Home</a>
             <a href="account-info.html" class="nav-button">Account</a>
         </div>
@@ -43,7 +44,7 @@
 
         <!-- Tab Content -->
 
-        <div class="tab-content active" id ="about"
+        <div class="tab-content active" id ="about">
             <h2>About Us</h2>
             <p>Drinks & Dice is your go-to spot for refreshing drinks and exciting games.
             Join us to explore the world of fun and flavor!</p>
@@ -155,7 +156,12 @@
         <div class="tab-content" id="reserve">
             <h2>Reserve A Time</h2>
             <p>Fill out the information below to make a reservation!</p>
-            <form class="reservation-form">
+        
+
+            <form class="reservation-form" action = "/reserve" method ="POST">
+
+                <input type="hidden" id="customer-id" name="customer_id" value="1">
+
                 <!-- Date -->
                 <label for="reservation-date">Select a Date:</label>
                 <input type="date" id="reservation-date" name="date" required>

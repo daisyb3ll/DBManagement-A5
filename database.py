@@ -4,7 +4,7 @@ from helper import helper
 class database():
     # constructor with connection path to DB
     def __init__(self, conn_path):
-        self.connection = sqlite3.connect(conn_path)
+        self.connection = sqlite3.connect(conn_path,check_same_thread=False)
         self.cursor = self.connection.cursor()
         print("connection made..")
 
@@ -37,6 +37,7 @@ class database():
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('BoardGames table Created')
 
     # function that creates Menu table in our database
@@ -50,24 +51,26 @@ class database():
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('MenuItems table Created')
 
     # function that creates customers table in our database
     def create_Customers_table(self):
         query = '''
-        CREATE TABLE Customers(
+        CREATE TABLE IF NOT EXISTS Customers(
             customerID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             customerName VARCHAR(20),
             customerEmail VARCHAR(20)
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('Customers table Created')
 
     # function that creates reservations table in our database
     def create_Reservations_table(self):
         query = '''
-        CREATE TABLE Reservations(
+        CREATE TABLE IF NOT EXISTS Reservations(
             resevationID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             customerID INTEGER,
             reservationDate VARCHAR(20),
@@ -77,12 +80,13 @@ class database():
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('Reservations table Created')
 
     # function that creates BoardGameOrders table in our database
     def create_BoardGameOrders_table(self):
         query = '''
-        CREATE TABLE BoardGameOrders(
+        CREATE TABLE IF NOT EXISTS BoardGameOrders(
             boardGameOrderID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             reservationID INTEGER,
             gameID INTEGER,
@@ -92,12 +96,13 @@ class database():
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('BoardGameOrders table Created')    
 
     # function that creates MenuOrders table in our database
     def create_MenuOrders_table(self):
         query = '''
-        CREATE TABLE MenuOrders(
+        CREATE TABLE IF NOT EXISTS MenuOrders(
             menuOrderID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             reservationID INTEGER,
             menuItemID INTEGER,
@@ -107,6 +112,7 @@ class database():
         );
         '''
         self.cursor.execute(query)
+        self.connection.commit()
         print('MenuOrders table Created')
 
     #function to populate a given table with a given filepath
@@ -116,11 +122,19 @@ class database():
             columns_info = self.cursor.fetchall()
             columns = [col[1] for col in columns_info if col[5] != 1]  # col[5] is 'pk' (primary key flag)
             data = helper.data_cleaner(filepath)
-            attribute_count = len(columns)
-            placeholders = ("?," * attribute_count)[:-1]
+            placeholders = ",".join(["?" for _ in columns])
             column_names = ",".join(columns)
-            query = f"INSERT INTO {table} ({column_names}) VALUES({placeholders})"
+            query = f"INSERT INTO {table} ({column_names}) VALUES ({placeholders})"
             self.bulk_insert(query, data)
+            print(f"Table {table} populated with data from {filepath}.")
+        else:
+            print(f"Table {table} is already populated. Skipping.")
+
+            # attribute_count = len(columns)
+            # placeholders = ("?," * attribute_count)[:-1]
+            # column_names = ",".join(columns)
+            # query = f"INSERT INTO {table} ({column_names}) VALUES({placeholders})"
+            # self.bulk_insert(query, data)
 
     # function for bulk inserting records
     # best used for inserting many records with parameters
@@ -130,41 +144,67 @@ class database():
 
     # function that returns if given table has records
     def is_table_empty(self, table):
-        query = f'''
-        SELECT COUNT(*)
-        FROM "{table}";
-        '''
-        result = self.single_record(query)
-        return result == 0
+        query = f"SELECT COUNT(*) FROM {table};"
+        return self.single_record(query) == 0
+        # query = f'''
+        # SELECT COUNT(*)
+        # FROM "{table}";
+        # '''
+        # result = self.single_record(query)
+        # return result == 0
     
     #Function to create a new customer given the name and email
     def create_new_customer(self, name, email):
         query = f"INSERT INTO Customers (customerName, customerEmail) Values(?, ?)"
         self.cursor.execute(query, (name, email))
+        self.connection.commit()
+
+        # query = "INSERT INTO Customers (customerName, customerEmail) VALUES (?, ?)"
+        # self.cursor.execute(query, (name, email))
+        # self.connection.commit()
+        print(f"New customer added: {name} ({email})")
 
     #Function to return a customerID based on name and email
     def get_customer_id(self, name, email):
         query = '''
         SELECT customerID
-        FROM customers
+        FROM Customers
         WHERE customerName LIKE ? AND customerEmail LIKE ?;
         '''
         return self.single_record_params(query, (name, email))
     
     #Function to check if an ID exists in the customers table
     def check_customer_id(self, id):
-         query = f'''
+        query = f'''
             SELECT COUNT(*)
             FROM customers
             WHERE customerID = ?
             '''
-         result = self.single_record_params(query, (id))
-         return result != 0
+        return self.single_record_params(query, (id,)) > 0
+        # result = self.single_record_params(query, (id))
+        # return result != 0
     
     def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
-        query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
-        self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
-    
-    def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
-        query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
-        self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
+        query = '''
+        INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount)
+        VALUES (?, ?, ?, ?)
+        '''
+        try:
+            self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
+            self.connection.commit()
+            print(f"New reservation added for customer {customerID} on {reservationDate} at {reservationTime} with {guestCount} guests.")  # Debugging
+        except sqlite3.Error as e:
+            print(f"Database error: {e}")  # Debugging
+
+    def select_query(self, query, params=()):
+        try:
+            self.cursor.execute(query, params)
+            return self.cursor.fetchall()
+        except sqlite3.Error as e:
+            print(f"Database error: {e}")
+            return []
+
+
+    def __del__(self):
+            self.connection.close()
+            print("Database connection closed.")
