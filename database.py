@@ -165,6 +165,49 @@ class database():
         query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
         self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
     
-    def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
-        query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
-        self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
+    def cancel_reservation(self, reservationID):
+        query = f"DELETE FROM Reservations WHERE reservationID = ?"
+        self.cursor.execute(query, (reservationID,))
+
+    def reserve_board_game(self, reservationID, boardGameName):
+        try:
+            self.cursor.execute("BEGIN TRANSACTION;")
+            insert_query = '''
+            INSERT INTO BoardGameOrders (reservationID, boardGameID, isReturned)
+            VALUES (?, (SELECT boardGameID FROM BoardGames WHERE gameName = ?), 0);
+            '''
+            self.cursor.execute(insert_query, (reservationID, boardGameName))
+        
+            update_query = '''
+            UPDATE BoardGames
+            SET isAvailable = 0
+            WHERE gameName = ?;
+            '''
+            self.cursor.execute(update_query, (boardGameName,))
+        
+            self.connection.commit()
+        except Exception as e:
+            self.connection.rollback()
+            print(f"Transaction failed: {e}")
+
+    def return_board_game(self, BoardGameOrderID, boardGameName):
+        try:
+            self.cursor.execute("BEGIN TRANSACTION;")
+            update_query_1 = '''
+            UPDATE BoardGameOrders
+            SET isReturned = true
+            WHERE BoardGameOrderID = ?;
+            '''
+            self.cursor.execute(update_query_1, (BoardGameOrderID))
+        
+            update_query_2 = '''
+            UPDATE BoardGames
+            SET isAvailable = 2
+            WHERE gameName = ?;
+            '''
+            self.cursor.execute(update_query_2, (boardGameName,))
+        
+            self.connection.commit()
+        except Exception as e:
+            self.connection.rollback()
+            print(f"Transaction failed: {e}")
