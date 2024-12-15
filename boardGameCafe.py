@@ -151,7 +151,11 @@ def make_reservation(id):
 # allows user to view their reservations
 def view_reservations(id):
     reservations_query = f'''
-    SELECT *
+    SELECT Reservation.reservationDate, Reservation.reservationTime, Reservation.guestCount, (
+        SELECT SUM(MenuItems.MenuItemPrice)
+        FROM MenuOrders
+        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
+        WHERE MenuOrders.reservationID = ?)
     FROM Reservation
     WHERE customerID LIKE "{id}";
     '''
@@ -160,12 +164,12 @@ def view_reservations(id):
     helper.pretty_print(results)
 
 #main method
-db_ops.create_Customers_table()
-db_ops.create_BoardGames_table()
-db_ops.create_MenuItems_table()
-db_ops.create_Reservations_table()
-db_ops.create_BoardGameOrders_table()
-db_ops.create_MenuOrders_table()
+#db_ops.create_Customers_table()
+#db_ops.create_BoardGames_table()
+#db_ops.create_MenuItems_table()
+#db_ops.create_Reservations_table()
+#db_ops.create_BoardGameOrders_table()
+#db_ops.create_MenuOrders_table()
 
 db_ops.populate_table("Customers", "Customers.csv")
 db_ops.populate_table("BoardGames", "BoardGames.csv")
@@ -178,6 +182,7 @@ db_ops.populate_table("MenuOrders", "MenuOrders.csv")
 db_ops.create_new_customer("alex", "lark@chapman.edu")
 print(db_ops.get_customer_id("alex", "lark@chapman.edu"))
 print(db_ops.check_customer_id("1"))
+print (db_ops.get_reservation_details(1))
 
 while True:
     user_choice = options()
