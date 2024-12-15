@@ -43,9 +43,9 @@ class database():
     def create_MenuItems_table(self):
         query = '''
         CREATE TABLE MenuItems(
-            MenuItemsID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            MenuItemName VARCHAR(20),
-            MenuItemPrice DOUBLE,
+            menuItemID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            menuItemName VARCHAR(20),
+            menuItemPrice DOUBLE,
             isVegan BOOL
         );
         '''
@@ -68,7 +68,7 @@ class database():
     def create_Reservations_table(self):
         query = '''
         CREATE TABLE Reservations(
-            resevationID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            reservationID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             customerID INTEGER,
             reservationDate VARCHAR(20),
             reservationTime VARCHAR(20),
@@ -169,6 +169,22 @@ class database():
         query = f"DELETE FROM Reservations WHERE reservationID = ?"
         self.cursor.execute(query, (reservationID,))
 
+    def view_reservations(self, reservationID):
+        reservations_query = f'''
+        SELECT Reservation.reservationDate, Reservation.reservationTime, Reservation.guestCount, (
+        SELECT SUM(MenuItems.MenuItemPrice)
+        FROM MenuOrders
+        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
+        WHERE MenuOrders.reservationID = ?)
+        FROM Reservation
+        WHERE ReservationID LIKE ?;
+        '''
+        helper.pretty_print(self.cursor.execute(reservations_query, (reservationID)))
+
+    def order_boba(self, reservationID, menuItemID, itemSpecifications):
+        query = f"INSERT INTO MenuOrders (reservationID, menuItemID, itemSpecification) VALUES (?, ?, ?)"
+        self.cursor.execute(query, (reservationID, menuItemID, itemSpecifications))
+
     def reserve_board_game(self, reservationID, boardGameName):
         try:
             self.cursor.execute("BEGIN TRANSACTION;")
@@ -211,3 +227,24 @@ class database():
         except Exception as e:
             self.connection.rollback()
             print(f"Transaction failed: {e}")
+
+    def get_reservation_details(self, reservationID):
+        create_view_query = '''
+        CREATE VIEW reservationDetails AS
+        SELECT Reservations.reservationID, MenuItems.menuItemName, MenuItems.menuItemPrice, MenuOrders.itemSpecifications, BoardGames.gameName
+        FROM Reservations
+        INNER JOIN MenuOrders ON Reservations.reservationID = MenuOrders.reservationID
+        INNER JOIN MenuItems ON MenuOrders.menuItemID = MenuItems.menuItemID
+        INNER JOIN BoardGameOrders ON Reservations.reservationID = BoardGameOrders.reservationID
+        INNER JOIN BoardGames ON BoardGameOrders.gameID = BoardGames.gameID
+        '''
+
+        select_query = '''
+        SELECT menuItemName, menuItemPrice, itemSpecifications, gameName
+        FROM reservationDetails
+        WHERE reservationID = ?
+        '''
+
+        self.cursor.execute(create_view_query)
+        self.cursor.execute(select_query, (reservationID,))
+        return self.cursor.fetchall()
