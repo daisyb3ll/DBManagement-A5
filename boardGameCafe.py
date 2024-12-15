@@ -135,41 +135,104 @@ def make_reservation(id):
         if failed:
             print("Invalid. Please enter an integer")
 
-    # allows them to pre-order drinks
-    # print("Would you like to order drinks ahead of time?\n")
-    # print('''1. Yes
-    #          2. No
-    #          ''')
-    # if helper.get_choice([1,2]) == 1:
-        
-    #print("Would you like to reserve a game?")
-    #print("What game would you like to reserve?")
-
     # adds new reservation to table
     db_ops.create_new_reservation(id, reserve_date, reserve_time, guest_amount)
+
+    # FOR ALEX TO MAKE
+    r_ID = db_ops.get_reservation_id()
+
+    # allows them to pre-order drinks
+    print("Would you like to order drinks ahead of time?\n")
+    print('''1. Yes
+             2. No
+            ''')
+    if helper.get_choice([1,2]) == 1:
+        view_menu()
+        done_ordering = False
+        while done_ordering == False:
+            drink_order = input("Enter the ID of the drink you would like\n")
+            print('''Which milk would you like?
+                     1. Regular
+                     2. Dairy free option
+                    ''')
+            vegan = helper.get_choice([1,2])
+            try:
+                if vegan == 1:
+                    db_ops.order_boba(r_ID, drink_order, "none")
+                elif vegan == 2:
+                    db_ops.order_boba(r_ID, drink_order, "dairy free")
+            except:
+                print("Invalid drink ID, your request didn't go through\n")
+            print('''Would you like to order another drink?
+                  1. Yes
+                  2. No
+                  ''')
+            if helper.get_choice([1,2]) == 2:
+                done_ordering = True
+        
+    print('''Would you like to reserve a game?
+          1. Yes
+          2. No
+          ''')
+    if helper.get_choice([1,2]) == 1:
+        view_board_games()
+        game_error = False
+        while game_error == False:
+            game_order = input("What game would you like to reserve?\n")
+            try:
+                db_ops.reserve_board_game(r_ID, game_order)
+                game_error = False
+            except:
+                print("Invalid game name, your request didn't go through")
+                game_error = True
+
+
+    
 
 # allows user to view their reservations
 def view_reservations(id):
     reservations_query = f'''
-    SELECT Reservation.reservationDate, Reservation.reservationTime, Reservation.guestCount, (
-        SELECT SUM(MenuItems.MenuItemPrice)
-        FROM MenuOrders
-        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
-        WHERE MenuOrders.reservationID = ?)
+    SELECT reservationID
     FROM Reservation
     WHERE customerID LIKE "{id}";
     '''
     results = db_ops.select_query(reservations_query)
     print("Here are all of your reservations:\n")
-    helper.pretty_print(results)
+
+    for i in results:
+        db_ops.view_reservations(i)
+
+    # allows user to delete reservation
+    print('''Would you like to cancel a reservation?
+            1. Yes
+            2. No
+          ''')
+    delete_reservation_choice = helper.get_choice([1,2])
+    if delete_reservation_choice == 1:
+        try:
+            reservation_to_delete = int(input("Enter the reservation ID of the reservation you would like to cancel\n"))
+            db_ops.cancel_reservation(reservation_to_delete)
+        except:
+            print("invalid reservation ID")
+
+# allows the user to view info for their account
+def account_info(id):
+    account_query = f'''
+        SELECT *
+        FROM Customers
+        WHERE customerID LIKE "{id}";
+        '''
+    account_results = db_ops.select_query(account_query)
+    helper.pretty_print(account_results)
+
 
 #main method
-#db_ops.create_Customers_table()
-#db_ops.create_BoardGames_table()
-#db_ops.create_MenuItems_table()
-#db_ops.create_Reservations_table()
-#db_ops.create_BoardGameOrders_table()
-#db_ops.create_MenuOrders_table()
+db_ops.create_Customers_table()
+db_ops.create_BoardGames_table()
+db_ops.create_MenuItems_table()
+db_ops.create_Reservations_table()
+db_ops.create_BoardGameOrders_table()
+db_ops.create_MenuOrders_table()
 
 db_ops.populate_table("Customers", "Customers.csv")
 db_ops.populate_table("BoardGames", "BoardGames.csv")
@@ -182,7 +245,6 @@ db_ops.populate_table("MenuOrders", "MenuOrders.csv")
 db_ops.create_new_customer("alex", "lark@chapman.edu")
 print(db_ops.get_customer_id("alex", "lark@chapman.edu"))
 print(db_ops.check_customer_id("1"))
-print (db_ops.get_reservation_details(1))
 
 while True:
     user_choice = options()
