@@ -23,19 +23,18 @@
     <!-- Header -->
     <div class="header">
         <div class="nav-buttons">
-            
-            <a href="home.html" class="nav-button">Home</a>
-            <a href="account-info.html" class="nav-button">Account</a>
+            <a href="/account-info" class="nav-button">Account</a>
         </div>
         <h1>Drinks & Dice</h1>
         <p class="minibody">Where fun meets flavor!</p>
+        <p>User ID: {{ user_id }}</p>
     </div>
 
     <div class="tab-container">
         <!-- Tab Links (Navigation) -->
         <div class="tabs">
-            <a href="#" class="tab-link" data-target="about">About</a>
-            <a href="#" class="tab-link active" data-target="menu">Menu</a>
+            <a href="#" class="tab-link active" data-target="about">About</a>
+            <a href="#" class="tab-link" data-target="menu">Menu</a>
             <a href="#" class="tab-link" data-target="games">Games</a>
             <a href="#" class="tab-link" data-target="reserve">Reserve</a>
             <a href="#" class="tab-link" data-target="past-reservation">Reservations</a>
@@ -95,10 +94,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-
-        <div class="tab-content active" id="menu">
+        <div class="tab-content" id="menu">
             <h2>Drink Menu</h2>
             <p>Explore our delicious boba drinks!</p>
             <!-- Drink List -->

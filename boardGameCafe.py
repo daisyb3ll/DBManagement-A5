@@ -1,5 +1,5 @@
 # imports
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session
 from database import database
 from helper import helper
 
@@ -31,7 +31,7 @@ def initialize_database():
     return "Database initialized and populated!"
 
 @app.route('/')
-def menu():
+def main():
         return render_template('sign-in.html')
 
 
@@ -81,7 +81,7 @@ def create_account():
 
 
 # Sign in
-@app.route('/sign-in', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def sign_in():
     if request.method == 'POST':
         entered_id = request.form['customer_id']
@@ -91,6 +91,21 @@ def sign_in():
         else:
             return jsonify({"error": "Invalid ID. Please try again!"})
     return render_template('sign-in.html')
+# Sign-In Route
+# @app.route('/sign-in', methods=['POST'])
+# def sign_in():
+#     user_email = request.form['email']
+#     user_password = request.form['password']
+
+#     # Check user credentials in the database
+#     user_id = db_ops.check_user_credentials(user_email, user_password)
+#     if user_id:
+#         # Redirect to menu page with the user ID as a query parameter
+#         return redirect(url_for('menu', user_id=user_id))
+#     else:
+#         # Show an error message or redirect to the sign-in page
+#         return render_template('sign-in.html', error="Invalid credentials")
+
 
     #local implementation: 
     # # user wants to sign in
@@ -123,9 +138,20 @@ def sign_in():
 
 
 # User menu
-@app.route('/menu/<customer_id>')
-def user_menu(customer_id):
-    return render_template('menu.html', customer_id=customer_id)
+# @app.route('/menu/<customer_id>')
+# def user_menu(customer_id):
+#     return render_template('menu.html', customer_id=customer_id)
+
+# User Menu Route
+@app.route('/menu', methods=['GET'])
+def menu():
+    user_id = request.args.get('user-id')
+    if user_id:
+        # You can retrieve user details from the database if needed
+        # user_info = db_ops.get_user_info(user_id)
+        return render_template('menu.html', user_id=user_id)
+    return redirect(url_for('sign_in'))  # Redirect to sign-in if no user-id is found
+
 
 # def menu_options():
 #     print('''Where would you like to go?
