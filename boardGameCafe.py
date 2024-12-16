@@ -323,28 +323,28 @@ def view_reservations(customer_id):
 #     print("Here are all of your reservations:\n")
 #     helper.pretty_print(results)
 
-# data to be written to the csv
-exported_file = [
-            ["menuItemName", "menuItemPrice", "itemSpecifications", "gameName"]
-]
-
-# have user enter/click reservation_id of reservation they want to get info for
-# reservation_id = (the one they entered)
-temp_list = []
-
-for a in db_ops.get_reservation_details(reservation_id):
-    temp_list.append(a)
-
-exported_file.append(temp_list)
-
-file_name = 'past_reservations.csv'
-
-# writing data to csv
-with open(file_name, mode='w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerows(exported_file)
-
-print(f"Report saved as {file_name}")
+    # data to be written to the csv
+    exported_file = [
+                ["menuItemName", "menuItemPrice", "itemSpecifications", "gameName"]
+    ]
+    
+    # have user enter/click reservation_id of reservation they want to get info for
+    # reservation_id = (the one they entered)
+    temp_list = []
+    
+    for a in db_ops.get_reservation_details(reservation_id):
+        temp_list.append(a)
+    
+    exported_file.append(temp_list)
+    
+    file_name = 'past_reservations.csv'
+    
+    # writing data to csv
+    with open(file_name, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(exported_file)
+    
+    print(f"Report saved as {file_name}")
 
 
 #main method
