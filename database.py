@@ -190,16 +190,17 @@ class database():
         self.cursor.execute(query, (reservationID,))
 
     def view_reservations(self, reservationID):
-        reservations_query = f'''
-        SELECT Reservation.reservationDate, Reservation.reservationTime, Reservation.guestCount, (
+        query = f'''
+        SELECT Reservations.reservationDate, Reservations.reservationTime, Reservations.guestCount, (
         SELECT SUM(MenuItems.MenuItemPrice)
         FROM MenuOrders
         INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
         WHERE MenuOrders.reservationID = ?)
-        FROM Reservation
-        WHERE ReservationID LIKE ?;
+        FROM Reservations
+        WHERE reservationID LIKE ?;
         '''
-        helper.pretty_print(self.cursor.execute(reservations_query, (reservationID)))
+        print ("view reservations called with reservationID: " + reservationID)
+        return self.cursor.execute(query, (reservationID, reservationID))
 
     def order_boba(self, reservationID, menuItemID, itemSpecifications):
         query = f"INSERT INTO MenuOrders (reservationID, menuItemID, itemSpecification) VALUES (?, ?, ?)"

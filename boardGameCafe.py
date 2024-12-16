@@ -305,13 +305,10 @@ def make_reservation():
 # View reservations
 @app.route('/reservations/<customer_id>', methods=['GET'])
 def view_reservations(customer_id):
-    reservations_query = f'''
-    SELECT *
-    FROM Reservations
-    WHERE customerID = ?;
-    '''
-    results = db_ops.cursor.execute(reservations_query, (customer_id,)).fetchall()
-    return render_template('reservations.html', reservations=results, customer_id=customer_id)
+    print("reservations route called")
+    reservations = db_ops.view_reservations(customer_id)
+    reservations_list = [list(reservation) for reservation in reservations] 
+    return {"reservations": reservations_list}
 
 # def view_reservations(id):
 #     reservations_query = f'''
