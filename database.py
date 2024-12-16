@@ -155,7 +155,7 @@ class database():
     def get_customer_id(self, name, email):
         query = '''
         SELECT customerID
-        FROM customers
+        FROM Customers
         WHERE customerName LIKE ? AND customerEmail LIKE ?;
         '''
         return self.single_record_params(query, (name, email))
@@ -164,7 +164,7 @@ class database():
     def check_customer_id(self, id):
          query = f'''
             SELECT COUNT(*)
-            FROM customers
+            FROM Customers
             WHERE customerID = ?
             '''
          result = self.single_record_params(query, (id))
