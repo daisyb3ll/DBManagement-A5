@@ -353,15 +353,15 @@ def view_reservations(customer_id):
 
 
 # Account info
-@app.route('/account/<customer_id>', methods=['GET'])
-def account_info(customer_id):
-    customer_query = '''
-    SELECT *
-    FROM Customers
-    WHERE customerID = ?;
-    '''
-    customer_info = db_ops.cursor.execute(customer_query, (customer_id,)).fetchone()
-    return render_template('account-info.html', customer=customer_info)
+@app.route('/account-info/<int:user_id>')
+def account_info(user_id):
+    # Fetch customer info based on the user_id
+    customer_info = db_ops.get_customer_info_by_id(user_id+1)
+    if customer_info:
+        return render_template('account-info.html', user_id=user_id, customer_info=customer_info)
+    else:
+        # Handle case where customer is not found
+        return "Customer not found", 404
 
 if __name__ == "__main__":
     print("Starting application...")

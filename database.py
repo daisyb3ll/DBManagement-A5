@@ -185,6 +185,23 @@ class database():
         except Exception as e:
             print(f"An error occurred while checking customer ID: {e}")
             return False
+        
+        # Function to return customer's name and email based on customerID
+    def get_customer_info_by_id(self, customer_id):
+        query = '''
+        SELECT customerName, customerEmail
+        FROM Customers
+        WHERE customerID = ?;
+        '''
+        self.cursor.execute(query, (customer_id,))
+        result = self.cursor.fetchone()
+        if result:
+            return {
+                'customerName': result[0],
+                'customerEmail': result[1]
+            }
+        else:
+            return None
     
     def view_board_games(self):
         query = "SELECT gameName, gameGenre, MinPlayers, MaxPlayers, isAvailable FROM BoardGames;"
