@@ -194,7 +194,8 @@ class database():
         SELECT Reservations.reservationDate, Reservations.reservationTime, Reservations.guestCount, (
         SELECT SUM(MenuItems.MenuItemPrice)
         FROM MenuOrders
-        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID)
+        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
+        WHERE MenuOrders.reservationID = Reservations.reservationID)
         FROM Reservations
         WHERE customerID LIKE ?;
         '''
