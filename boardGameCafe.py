@@ -16,6 +16,13 @@ db_ops = database("cafe.db")
 # Initialize database tables
 @app.route('/initialize', methods=['GET'])
 def initialize_database():
+    db_ops.drop_table("Customers")
+    db_ops.drop_table("BoardGames")
+    db_ops.drop_table("MenuItems")
+    db_ops.drop_table("Reservations")
+    db_ops.drop_table("BoardGameOrders")
+    db_ops.drop_table("MenuOrders")
+
     db_ops.create_Customers_table()
     db_ops.create_BoardGames_table()
     db_ops.create_MenuItems_table()
@@ -28,6 +35,7 @@ def initialize_database():
     db_ops.populate_table("Reservations", "Reservations.csv")
     db_ops.populate_table("BoardGameOrders", "BoardGameOrders.csv")
     db_ops.populate_table("MenuOrders", "MenuOrders.csv")
+    print ("Database initialized and populated!")
     return "Database initialized and populated!"
 
 @app.route('/')
@@ -186,9 +194,9 @@ def view_menu():
 # View board games
 @app.route('/board-games', methods=['GET'])
 def view_board_games():
-    game_menu_query = "SELECT * FROM BoardGames;"
-    games = db_ops.select_query(game_menu_query)
-    return render_template('board-games.html', games=games)
+    games = db_ops.view_board_games()
+    games_list = [list(game) for game in games]  # Convert rows to lists
+    return {"games": games_list}
 
 # # user wants to view board games
 # def view_board_games():
@@ -328,10 +336,10 @@ def account_info(customer_id):
     customer_info = db_ops.cursor.execute(customer_query, (customer_id,)).fetchone()
     return render_template('account-info.html', customer=customer_info)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    print("Starting application...")
+    initialize_database()  # Call the initialization method
     app.run(debug=True)
-
-
 
 # db_ops.create_Customers_table()
 # db_ops.create_BoardGames_table()

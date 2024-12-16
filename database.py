@@ -4,7 +4,7 @@ from helper import helper
 class database():
     # constructor with connection path to DB
     def __init__(self, conn_path):
-        self.connection = sqlite3.connect(conn_path)
+        self.connection = sqlite3.connect(conn_path, check_same_thread=False)
         self.cursor = self.connection.cursor()
         print("connection made..")
 
@@ -109,6 +109,15 @@ class database():
         self.cursor.execute(query)
         print('MenuOrders table Created')
 
+    def drop_table(self, table_name):
+        try:
+            query = f"DROP TABLE IF EXISTS {table_name};"
+            self.cursor.execute(query)
+            self.connection.commit()
+            print(f"Table {table_name} dropped successfully!")
+        except sqlite3.Error as e:
+            print(f"Error dropping table {table_name}: {e}")
+
     #function to populate a given table with a given filepath
     def populate_table(self, table, filepath):
         if self.is_table_empty(table):
@@ -161,6 +170,13 @@ class database():
          result = self.single_record_params(query, (id))
          return result != 0
     
+    def view_board_games(self):
+        query = "SELECT gameName, gameGenre, MinPlayers, MaxPlayers, isAvailable FROM BoardGames;"
+        result = self.cursor.execute(query)
+        print("view board games called")
+        print(result)
+        return result
+
     def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
         query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
         self.cursor.execute(query, (customerID, reservationDate, reservationTime, guestCount))
