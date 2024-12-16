@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body>
@@ -29,7 +29,7 @@
     <div class="box-section">
         <div class="form-container">
             <h2>Create Account</h2>
-            <form action="menu.html" method="GET">
+            <form action="/menu" method="GET">
                 <div class="input-group">
                     <label for="userName">Enter Your Name</label>
                     <input type="text" id="userName" name="userName" placeholder="Your Name" required>
@@ -42,7 +42,7 @@
             </form>
 
             <p class="no-account-text">Already have an account?</p>
-            <a href="sign-in.html" class="create-account-btn">Login</a>
+            <a href="/" class="create-account-btn">Login</a>
         </div>
     </div>
 

@@ -13,7 +13,6 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='tabs.css') }}">
 </head>
 
 <body>
@@ -32,7 +31,7 @@
             <h2>Sign In</h2>
 
             <!-- Sign-In Form -->
-            <form action="menu.html" method="GET">
+            <form action="/menu" method="GET">
                 <div class="input-group">
                     <label for="user-id">Enter Your ID</label>
                     <input type="text" id="user-id" name="user-id" placeholder="Your ID" required>
@@ -42,7 +41,8 @@
             </form>
 
             <p class="no-account-text">Don't have an account?</p>
-            <a href="create-account.html" class="create-account-btn">Create Account</a>
+            <a href="/create-account" class="create-account-btn">Create Account</a>
+
         </div>
     </section>
 

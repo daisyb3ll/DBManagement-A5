@@ -30,19 +30,9 @@ def initialize_database():
     db_ops.populate_table("MenuOrders", "MenuOrders.csv")
     return "Database initialized and populated!"
 
-
-# Home page
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
-# @app.route('/sign-in')
-# def sign_in():
-#     return render_template('sign-in.html')
-
 @app.route('/')
 def menu():
-        return render_template('menu.html')
+        return render_template('sign-in.html')
 
 
 # user wants to create an account
@@ -90,14 +80,14 @@ def create_account():
 
 
 
-    # Sign in
+# Sign in
 @app.route('/sign-in', methods=['GET', 'POST'])
 def sign_in():
     if request.method == 'POST':
         entered_id = request.form['customer_id']
         IDvalidity = db_ops.check_customer_id(entered_id)
         if IDvalidity:
-            return render_template('user-menu.html', customer_id=entered_id)
+            return render_template('menu.html', customer_id=entered_id)
         else:
             return jsonify({"error": "Invalid ID. Please try again!"})
     return render_template('sign-in.html')
@@ -133,9 +123,9 @@ def sign_in():
 
 
 # User menu
-@app.route('/user-menu/<customer_id>')
+@app.route('/menu/<customer_id>')
 def user_menu(customer_id):
-    return render_template('user-menu.html', customer_id=customer_id)
+    return render_template('menu.html', customer_id=customer_id)
 
 # def menu_options():
 #     print('''Where would you like to go?
