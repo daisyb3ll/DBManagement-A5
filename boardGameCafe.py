@@ -93,14 +93,16 @@ def create_account():
 # Sign in
 @app.route('/', methods=['GET', 'POST'])
 def sign_in():
+    print("sign in method called")
     if request.method == 'POST':
         entered_id = request.form['customer_id']
         IDvalidity = db_ops.check_customer_id(entered_id)
         if IDvalidity:
-            return render_template('menu.html', customer_id=entered_id)
+            return redirect(url_for('menu', user_id=entered_id))
         else:
-            return jsonify({"error": "Invalid ID. Please try again!"})
+            return render_template('sign-in.html', error="Invalid ID. Please try again!")
     return render_template('sign-in.html')
+
 # Sign-In Route
 # @app.route('/sign-in', methods=['POST'])
 # def sign_in():
@@ -155,14 +157,14 @@ def sign_in():
 # User Menu Route
 @app.route('/menu', methods=['GET'])
 def menu():
-    user_id = request.args.get('user-id')
+    user_id = request.args.get('user_id')
     if user_id:
-        # You can retrieve user details from the database if needed
-        # user_info = db_ops.get_user_info(user_id)
+        print(f"User ID received in menu route: {user_id}")
         return render_template('menu.html', user_id=user_id)
-    return redirect(url_for('sign_in'))  # Redirect to sign-in if no user-id is found
-
-
+    else:
+        print("No user_id found, redirecting to sign-in")
+        return redirect(url_for('sign_in'))
+    
 # def menu_options():
 #     print('''Where would you like to go?
 #             1. Menu
