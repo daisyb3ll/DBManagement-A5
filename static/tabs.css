@@ -203,3 +203,28 @@
 .delete-reservation-btn:active {
     background-color: #b71c1c; /* Even darker red on click */
 }
+
+
+.export-reservation-btn {
+    background-color: #643b22;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 10px;
+    margin: 20px;
+    max-width: 200px;
+    margin-left: 0; /* Aligns the button to the left side */
+}
+
+.export-reservation-btn:hover {
+    background-color: #ff6f14;
+}
+
+.export-reservation-btn:active {
+    background-color: #ff6f14;
+}
