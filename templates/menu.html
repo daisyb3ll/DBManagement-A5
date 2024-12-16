@@ -27,7 +27,7 @@
         </div>
         <h1>Drinks & Dice</h1>
         <p class="minibody">Where fun meets flavor!</p>
-        <p>User ID: {{ user_id }}</p>
+        <p id="user-id-display">User ID: {{ user_id }}</p>
     </div>
 
     <div class="tab-container">
@@ -244,7 +244,8 @@
                 }
 
                 if (tab.getAttribute('data-target') === 'past-reservation') {
-                    const user_id = 1;
+                    const userIdElement = document.getElementById('user-id-display');
+                    const user_id = userIdElement.textContent.split(':')[1].trim();
                     fetch('/reservations/' + user_id) //TODO: fix input
                         .then(response => response.json())
                         .then(data => {
