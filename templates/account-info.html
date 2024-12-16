@@ -21,7 +21,7 @@
     <div class="header">
         <div class="nav-buttons">
             <!-- Back button with dynamic user_id -->
-            <a href="/menu?user-id={{ user_id }}" class="nav-button">Back</a>
+            <a href="{{ url_for('menu', user_id=user_id) }}" class="nav-button">Back</a>
         </div>
         <h1>Account Info</h1>
     </div>
