@@ -162,13 +162,29 @@ class database():
     
     #Function to check if an ID exists in the customers table
     def check_customer_id(self, id):
-         query = f'''
+        if not id:  # Check for empty or None input
+            print("Invalid input: ID is None or empty.")
+            return False
+
+        if not isinstance(id, (str, int)):  # Ensure ID is a string or integer
+            print(f"Invalid input type: ID must be a string or integer, got {type(id)}.")
+            return False
+
+        try:
+            query = '''
             SELECT COUNT(*)
             FROM Customers
             WHERE customerID = ?
             '''
-         result = self.single_record_params(query, (id))
-         return result != 0
+            result = self.cursor.execute(query, (id,)).fetchone()  # Fetch the result
+
+            # Extract the count from the result tuple (assuming single row)
+            count = result[0] if result else 0
+            print(f"Checking if customer ID is valid. ID: {id}, Count of ID: {count}")
+            return count != 0  # Return True if the count is not 0
+        except Exception as e:
+            print(f"An error occurred while checking customer ID: {e}")
+            return False
     
     def view_board_games(self):
         query = "SELECT gameName, gameGenre, MinPlayers, MaxPlayers, isAvailable FROM BoardGames;"

@@ -27,11 +27,16 @@
         <div class="form-container">
             <h2>Sign In</h2>
 
+            <!-- Display Error Message -->
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+
             <!-- Sign-In Form -->
-            <form action="/menu" method="GET">
+            <form action="/" method="POST">
                 <div class="input-group">
                     <label for="user-id">Enter Your ID</label>
-                    <input type="text" id="user-id" name="user-id" placeholder="Your ID" required>
+                    <input type="text" id="user-id" name="customer_id" placeholder="Your ID" required>
                 </div>
 
                 <button type="submit" class="btn">Sign In</button>
