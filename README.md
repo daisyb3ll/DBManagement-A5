@@ -30,7 +30,7 @@ The owners have requested ww reservation and ordering system for their website. 
 ## 3. source files; 
 
 **diagrams**
-- [ER Diagram ]( )
+- [ER Diagram ](https://lucid.app/lucidchart/85ca6fff-dcb2-40c9-848e-c9ca4e04ab9b/edit?invitationId=inv_968e025b-2f1f-4e1b-ad9a-84b2b8c11bbe&page=0_0# )
 - [Database Schema ](https://lucid.app/lucidchart/1a101883-cd50-4307-acee-17b6f61ae23e/edit?invitationId=inv_fc7e53ce-ac2f-4703-aed8-06a196dfa75a)
 - [wireframe ](https://lucid.app/lucidchart/ef74caa1-87be-408c-be6b-ef1adf075aaa/edit?viewport_loc=-279%2C-781%2C4852%2C2762%2C0_0&invitationId=inv_ccc6a5f6-603a-45c9-bb03-95a56fc6f9fd)
 
