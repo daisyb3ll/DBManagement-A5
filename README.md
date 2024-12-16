@@ -41,6 +41,8 @@ The owners have requested ww reservation and ordering system for their website. 
 - `sign-in.html`
 - `home.html`
 - `menu.html`
+- `styles.css`
+- `tabs.css`
 
 **functionality**
 - `database.py`
@@ -59,8 +61,6 @@ The owners have requested ww reservation and ordering system for their website. 
 - `MenuItems.csv`
 - `MenuOrders.csv`
 - `Reservations.csv`
-- `styles.css`
-- `tabs.css`
 
 ## 3. known runtime/compilaiton errors  
 
