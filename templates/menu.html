@@ -161,34 +161,28 @@
 
         <div class="tab-content" id="past-reservation">
             <h2>Past Reservations</h2>
-            <p>Here are your past reservations:</p>
-
-            <div class="tab-content" id="past-reservation">
-                <h2>Past Reservations</h2>
-                <p>Here are your past reservations:</p>
-            
-                <!-- Past Reservation Example -->
-                <div class="reservation-item">
-                    <p><strong>Date:</strong> 2024-12-10</p>
-                    <p><strong>Time:</strong> 18:00</p>
-                    <p><strong>Number of Guests:</strong> 4</p>
-                    <p><strong>Total Price:</strong> $30.00</p>
-                    <button class="btn delete-reservation-btn">Delete Past Reservation</button>
-                </div>
-            
-                <!-- Another Past Reservation Example -->
-                <div class="reservation-item">
-                    <p><strong>Date:</strong> 2024-12-05</p>
-                    <p><strong>Time:</strong> 14:00</p>
-                    <p><strong>Number of Guests:</strong> 2</p>
-                    <p><strong>Total Price:</strong> $12.00</p>
-                    <button class="btn delete-reservation-btn">Delete Past Reservation</button>
-                </div>
-            
-                <!-- You can add more past reservations here -->
+            <p>Here are your past reservations:</p>  
+                      
+            <!-- Past Reservation Example -->
+            <div class="reservation-item">
+                <p><strong>Date:</strong> 2024-12-10</p>
+                <p><strong>Time:</strong> 18:00</p>
+                <p><strong>Number of Guests:</strong> 4</p>
+                <p><strong>Total Price:</strong> $30.00</p>
+                <button class="btn delete-reservation-btn">Delete Past Reservation</button>
             </div>
             
-        </div>
+            <!-- Another Past Reservation Example -->
+            <div class="reservation-item">
+                <p><strong>Date:</strong> 2024-12-05</p>
+                <p><strong>Time:</strong> 14:00</p>
+                <p><strong>Number of Guests:</strong> 2</p>
+                <p><strong>Total Price:</strong> $12.00</p>
+                <button class="btn delete-reservation-btn">Delete Past Reservation</button>
+            </div>
+            
+            <!-- You can add more past reservations here -->
+        </div>    
     </div>
 
     <script>
@@ -262,19 +256,20 @@
                 }
 
                 if (tab.getAttribute('data-target') === 'past-reservation') {
-                    const user_id = 123;
-                    fetch(fetch('/reservations/1')) //TODO: fix input
+                    const user_id = 1;
+                    fetch('/reservations/' + user_id) //TODO: fix input
                         .then(response => response.json())
                         .then(data => {
-                            const container = target.querySelector('.reservations');
+                            const container = target.querySelector('.reservation-item');
                             container.innerHTML = '';
-
                             if (data.reservations && data.reservations.length > 0) {
                                 data.reservations.forEach(reservation => {
                                     container.innerHTML += `
-                                        <div class="drink-item">
-                                            <h3 class="drink-name">${reservation[0]}</h3>
-                                            <p class="drink-price">$${reservation[1]}</p>
+                                        <div class="game-item">
+                                            <h3 class="game-name">${reservation[0]}</h3>
+                                            <p class="game-details">
+                                                Genre: ${reservation[1]} | Players: ${reservation[2]}-${reservation[3]} | Available: ${reservation[4] ? 'Yes' : 'No'}
+                                            </p>
                                         </div>`;
                             });
                             } else {

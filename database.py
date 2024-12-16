@@ -189,22 +189,23 @@ class database():
         query = f"DELETE FROM Reservations WHERE reservationID = ?"
         self.cursor.execute(query, (reservationID,))
 
-    def view_reservations(self, reservationID):
+    def view_reservations(self, customerID):
         query = f'''
         SELECT Reservations.reservationDate, Reservations.reservationTime, Reservations.guestCount, (
         SELECT SUM(MenuItems.MenuItemPrice)
         FROM MenuOrders
-        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID
-        WHERE MenuOrders.reservationID = ?)
+        INNER JOIN MenuItems on MenuOrders.menuItemID = MenuItems.menuItemID)
         FROM Reservations
-        WHERE reservationID LIKE ?;
+        WHERE customerID LIKE ?;
         '''
-        print ("view reservations called with reservationID: " + reservationID)
-        return self.cursor.execute(query, (reservationID, reservationID))
+        print ("view reservations called with customerID: " + customerID)
 
-    def order_boba(self, reservationID, menuItemID, itemSpecifications):
-        query = f"INSERT INTO MenuOrders (reservationID, menuItemID, itemSpecification) VALUES (?, ?, ?)"
-        self.cursor.execute(query, (reservationID, menuItemID, itemSpecifications))
+
+        self.cursor.execute(query, (customerID))
+        results = self.cursor.fetchall()
+       
+        helper.pretty_print(results)
+        return results
 
     def reserve_board_game(self, reservationID, boardGameName):
         try:

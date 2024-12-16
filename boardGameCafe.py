@@ -307,7 +307,8 @@ def make_reservation():
 def view_reservations(customer_id):
     print("reservations route called")
     reservations = db_ops.view_reservations(customer_id)
-    reservations_list = [list(reservation) for reservation in reservations] 
+    reservations_list = [list(reservation) for reservation in reservations]
+    print("list length: " + str(len(reservations_list)))
     return {"reservations": reservations_list}
 
 # def view_reservations(id):
