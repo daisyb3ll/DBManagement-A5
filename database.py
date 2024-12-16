@@ -174,8 +174,12 @@ class database():
         query = "SELECT gameName, gameGenre, MinPlayers, MaxPlayers, isAvailable FROM BoardGames;"
         result = self.cursor.execute(query)
         print("view board games called")
-        print(result)
         return result
+    
+    def view_menu_items(self):
+        query = "SELECT MenuItemName, MenuItemPrice FROM MenuItems;"
+        print("view MenuItems called")
+        return self.cursor.execute(query)
 
     def create_new_reservation(self, customerID, reservationDate, reservationTime, guestCount):
         query = f"INSERT INTO Reservations (customerID, reservationDate, reservationTime, guestCount) Values(?, ?, ?, ?)"
