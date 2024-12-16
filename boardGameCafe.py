@@ -175,9 +175,9 @@ def menu():
 # View menu
 @app.route('/view-menu', methods=['GET'])
 def view_menu():
-    food_menu_query = "SELECT * FROM MenuItems;"
-    items = db_ops.select_query(food_menu_query)
-    return render_template('menu.html', items=items)
+    menuItems = db_ops.view_menu_items()
+    menuItems_list = [list(menuItem) for menuItem in menuItems]
+    return {"menuItems": menuItems_list}
 
 # # user wants to view_menu
 # def view_menu():
@@ -197,6 +197,7 @@ def view_board_games():
     games = db_ops.view_board_games()
     games_list = [list(game) for game in games]  # Convert rows to lists
     return {"games": games_list}
+
 
 # # user wants to view board games
 # def view_board_games():
@@ -304,13 +305,10 @@ def make_reservation():
 # View reservations
 @app.route('/reservations/<customer_id>', methods=['GET'])
 def view_reservations(customer_id):
-    reservations_query = f'''
-    SELECT *
-    FROM Reservations
-    WHERE customerID = ?;
-    '''
-    results = db_ops.cursor.execute(reservations_query, (customer_id,)).fetchall()
-    return render_template('reservations.html', reservations=results, customer_id=customer_id)
+    print("reservations route called")
+    reservations = db_ops.view_reservations(customer_id)
+    reservations_list = [list(reservation) for reservation in reservations] 
+    return {"reservations": reservations_list}
 
 # def view_reservations(id):
 #     reservations_query = f'''
